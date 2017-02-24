@@ -6,6 +6,29 @@ import './App.css';
 var WEBHOOKS = ["JIRA check", "Max number of lines check", "Commit message length check"];
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      webhooks: WEBHOOKS,
+      value: '',
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    var webhooks_arr = this.state.webhooks;
+    webhooks_arr.push(this.state.value);
+    this.setState({webhooks: webhooks_arr});
+  }
+
   render() {
     return (
       <div className="App">
@@ -13,8 +36,8 @@ class App extends Component {
         <Introduction />
         <Description />
 
-        <WebhookTable webhooks={WEBHOOKS}/>
-        <InputWebhook />
+        <WebhookTable webhooks={this.state.webhooks}/>
+        <InputWebhook handleChange={this.handleChange} handleSubmit={this.handleSubmit} value={this.state.value}/>
       </div>
     );
   }
@@ -71,28 +94,11 @@ class WebhookRow extends Component {
 }
 
 class InputWebhook extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {value: ''};
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({value: event.target.value});
-  }
-
-  handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
-    event.preventDefault();
-  }
-
   render() {
     return (
-      <form className="webhooks_content" onSubmit={this.handleSubmit}>
+      <form className="webhooks_content" onSubmit={this.props.handleSubmit}>
         <label>
-          Add a new webhook: <input type="text" value={this.state.value} onChange={this.handleChange} />
+          Add a new webhook: <input type="text" value={this.props.value} onChange={this.props.handleChange} />
         </label>
         <input type="submit" value="Submit" />
       </form>
