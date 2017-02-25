@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 
-//TODO: continue working through: https://facebook.github.io/react/docs/thinking-in-react.html
-
-var WEBHOOKS = ["JIRA check", "Max number of lines check", "Commit message length check"];
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      webhooks: WEBHOOKS,
+      webhooks: [],
       value: '',
     };
 
