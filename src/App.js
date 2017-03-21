@@ -19,10 +19,7 @@ class App extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
-    var webhooks_arr = this.state.webhooks;
-    webhooks_arr.push(this.state.value);
-    this.setState({webhooks: webhooks_arr});
+    this.setState({webhooks: this.state.webhooks.concat(this.state.value)});
   }
 
   render() {
